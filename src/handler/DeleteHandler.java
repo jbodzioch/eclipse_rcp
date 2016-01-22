@@ -13,9 +13,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import model.BookTo;
+import model.DataProvider;
 import model.RestClient;
 
 public class DeleteHandler extends AbstractHandler implements IHandler {
+
+	DataProvider model = DataProvider.getInstance();
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -32,11 +35,15 @@ public class DeleteHandler extends AbstractHandler implements IHandler {
 				RestClient.delete(book.getId());
 				deletedIds += book.getId().toString() + ", ";
 			}
-			
-			deletedIds = deletedIds.substring(0, deletedIds.length() - 2);
-			MessageDialog dialog = new MessageDialog(new Shell(), "Book deleted", null,
-					"Deleted book(s) with id(s): " + deletedIds, MessageDialog.INFORMATION, new String[] { "OK" }, 0);
-			dialog.open();
+			model.setBooks(RestClient.search(""));
+
+			if (deletedIds != "") {
+				deletedIds = deletedIds.substring(0, deletedIds.length() - 2);
+				MessageDialog dialog = new MessageDialog(new Shell(), "Book deleted", null,
+						"Deleted book(s) with id(s): " + deletedIds, MessageDialog.INFORMATION, new String[] { "OK" },
+						0);
+				dialog.open();
+			}
 		}
 
 		return null;

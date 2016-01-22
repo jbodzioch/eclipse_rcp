@@ -14,9 +14,12 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import dialog.EditDialog;
 import model.BookTo;
+import model.DataProvider;
 import model.RestClient;
 
 public class EditHandler extends AbstractHandler implements IHandler {
+	
+	DataProvider model = DataProvider.getInstance();
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -39,6 +42,7 @@ public class EditHandler extends AbstractHandler implements IHandler {
 				dialog.setTxtAuthors(book.getAuthors());
 				if (dialog.open() == Window.OK) {
 					RestClient.put(dialog.getId(), dialog.getTitle(), dialog.getAuthors());
+					model.setBooks(RestClient.search(""));
 				}
 			}
 		}

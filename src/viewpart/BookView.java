@@ -28,7 +28,7 @@ public class BookView extends ViewPart {
 	public BookView() {
 	}
 
-	private DataProvider model = new DataProvider();
+	private DataProvider model = DataProvider.getInstance();
 
 	private BookFilter filter;
 	private TableViewer viewer;
